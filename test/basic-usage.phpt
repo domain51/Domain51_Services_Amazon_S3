@@ -23,14 +23,15 @@ assert('$s3->bucket($bucket)->has("TEST") == false');
 
 // create a new object using fluent API
 $result = $s3->create("/{$bucket}/TEST")
-             ->setFile(dirname(__FILE__) . '/TEST')
+             ->attachFile(dirname(__FILE__) . '/TEST')
+             ->setACL(new Domain51_Service_Amazon_S3_ACL('public-read'))
              ->put();
 
 assert('$result == true');
 assert('$s3->bucket($bucket)->has("TEST") == true');
 
 $file = $s3->get("/{$bucket}/TEST");
-assert('$file->contents === dirname(__FILE__) . "/TEST"');
+assert('$file->contents === trim(file_get_contents(dirname(__FILE__) . "/TEST"))');
 assert('$file == $s3->bucket($bucket)->get("TEST")');
 
 $result = $s3->delete("/{$bucket}/TEST");
