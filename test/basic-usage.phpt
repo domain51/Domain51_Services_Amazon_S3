@@ -34,9 +34,9 @@ assert('$file->contents === dirname(__FILE__) . "/TEST"');
 assert('$file == $s3->bucket($bucket)->get("TEST")');
 
 $result = $s3->delete("/{$bucket}/TEST");
-assert('$result == false');
+assert('$result == true');
 
-assert('$s3->bucket($bucket)->has("TEST")');
+assert('$s3->bucket($bucket)->has("TEST") === false');
 
 ?>
 ===DONE===
