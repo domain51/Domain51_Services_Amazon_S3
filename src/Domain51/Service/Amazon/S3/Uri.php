@@ -23,4 +23,9 @@ class Domain51_Service_Amazon_S3_Uri
                 return $this->_bucket;
         }
     }
+    
+    public function __toString()
+    {
+        return '/' . $this->bucket . '/' . $this->object;
+    }
 }

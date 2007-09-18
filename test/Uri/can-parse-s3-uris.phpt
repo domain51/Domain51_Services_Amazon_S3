@@ -20,22 +20,32 @@ $object_name = 'object_name' . rand(10, 20);
 $uri = new Domain51_Service_Amazon_S3_Uri("s3://{$bucket}/{$object_name}");
 assert('$uri->bucket == $bucket');
 assert('$uri->object == $object_name');
+$expected = "/{$bucket}/{$object_name}";
+assert('(string)$uri == $expected');
 
 $uri = new Domain51_Service_Amazon_S3_Uri("/{$bucket}/{$object_name}");
 assert('$uri->bucket == $bucket');
 assert('$uri->object == $object_name');
+$expected = "/{$bucket}/{$object_name}";
+assert('(string)$uri == $expected');
 
 $uri = new Domain51_Service_Amazon_S3_Uri("{$bucket}/{$object_name}");
 assert('$uri->bucket == $bucket');
 assert('$uri->object == $object_name');
+$expected = "/{$bucket}/{$object_name}";
+assert('(string)$uri == $expected');
 
 $uri = new Domain51_Service_Amazon_S3_Uri("/{$bucket}/");
 assert('$uri->bucket == $bucket');
 assert('$uri->object === false');
+$expected = "/{$bucket}/";
+assert('(string)$uri == $expected');
 
 $uri = new Domain51_Service_Amazon_S3_Uri("/{$bucket}");
 assert('$uri->bucket == $bucket');
 assert('$uri->object === false');
+$expected = "/{$bucket}/";
+assert('(string)$uri == $expected');
 
 ?>
 ===DONE===
