@@ -1,5 +1,6 @@
 --TEST--
 This test outlines the basic usage expected for Domain51_Service_Amazon_S3
+--ENSURE--
 --FILE--
 <?php
 
@@ -27,17 +28,20 @@ $result = $s3->create("/{$bucket}/TEST")
              ->setACL(new Domain51_Service_Amazon_S3_ACL('public-read'))
              ->put();
 
-assert('$result == true');
-assert('$s3->bucket($bucket)->has("TEST") == true');
+ensure($result)->equals(true);
+ensure($s3->bucket($bucket)->has("TEST"))
+    ->equals(true);
 
 $file = $s3->get("/{$bucket}/TEST");
-assert('$file->contents === trim(file_get_contents(dirname(__FILE__) . "/TEST"))');
-assert('$file == $s3->bucket($bucket)->get("TEST")');
+ensure($file->contents)
+    ->is(trim(file_get_contents(dirname(__FILE__) . "/TEST")));
+ensure($file)
+    ->equals($s3->bucket($bucket)->get("TEST"));
 
 $result = $s3->delete("/{$bucket}/TEST");
-assert('$result == true');
+ensure($result)->equals(true);
 
-assert('$s3->bucket($bucket)->has("TEST") === false');
+ensure($s3->bucket($bucket)->has("TEST"))->is(false);
 
 ?>
 ===DONE===

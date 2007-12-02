@@ -10,6 +10,7 @@ URIs are acceptable:
 * /bucket/
 
 If no object is present, the object property will be false.
+--ENSURE--
 --FILE--
 <?php
 
@@ -18,34 +19,34 @@ require_once dirname(__FILE__) . '/../_setup.inc';
 $bucket = 'bucket' . rand(10, 20);
 $object_name = 'object_name' . rand(10, 20);
 $uri = new Domain51_Service_Amazon_S3_Uri("s3://{$bucket}/{$object_name}");
-assert('$uri->bucket == $bucket');
-assert('$uri->object == $object_name');
+ensure($uri->bucket)->is($bucket);
+ensure($uri->object)->is($object_name);
 $expected = "/{$bucket}/{$object_name}";
-assert('(string)$uri == $expected');
+ensure((string)$uri)->is($expected);
 
 $uri = new Domain51_Service_Amazon_S3_Uri("/{$bucket}/{$object_name}");
-assert('$uri->bucket == $bucket');
-assert('$uri->object == $object_name');
+ensure($uri->bucket)->is($bucket);
+ensure($uri->object)->is($object_name);
 $expected = "/{$bucket}/{$object_name}";
-assert('(string)$uri == $expected');
+ensure((string)$uri)->is($expected);
 
 $uri = new Domain51_Service_Amazon_S3_Uri("{$bucket}/{$object_name}");
-assert('$uri->bucket == $bucket');
-assert('$uri->object == $object_name');
+ensure($uri->bucket)->is($bucket);
+ensure($uri->object)->is($object_name);
 $expected = "/{$bucket}/{$object_name}";
-assert('(string)$uri == $expected');
+ensure((string)$uri)->is($expected);
 
 $uri = new Domain51_Service_Amazon_S3_Uri("/{$bucket}/");
-assert('$uri->bucket == $bucket');
-assert('$uri->object === false');
+ensure($uri->bucket)->is($bucket);
+ensure($uri->object)->is(false);
 $expected = "/{$bucket}/";
-assert('(string)$uri == $expected');
+ensure((string)$uri)->is($expected);
 
 $uri = new Domain51_Service_Amazon_S3_Uri("/{$bucket}");
-assert('$uri->bucket == $bucket');
-assert('$uri->object === false');
+ensure($uri->bucket)->is($bucket);
+ensure($uri->object)->is(false);
 $expected = "/{$bucket}/";
-assert('(string)$uri == $expected');
+ensure((string)$uri)->is($expected);
 
 ?>
 ===DONE===

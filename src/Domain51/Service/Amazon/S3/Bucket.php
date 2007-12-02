@@ -3,9 +3,13 @@
 class Domain51_Service_Amazon_S3_Bucket
 {
     static private $counter = 0;
-    public function __construct()
+    private $_connection = null;
+    private $_uri = null;
+    
+    public function __construct($uri, Domain51_Service_Amazon_S3_Connection $connection)
     {
-        
+        $this->_uri = $uri;
+        $this->_connection = $connection;
     }
     
     public function has($name)
@@ -17,6 +21,9 @@ class Domain51_Service_Amazon_S3_Bucket
     
     public function get($name)
     {
-        return new Domain51_Service_Amazon_S3_Object();
+        return new Domain51_Service_Amazon_S3_Object(
+            new Domain51_Service_Amazon_S3_Uri("{$this->_uri->bucket}/{$name}"),
+            $this->_connection
+        );
     }
 }
