@@ -20,7 +20,7 @@ $bucket = 'tswicegood-test';
 
 $s3 = new Domain51_Service_Amazon_S3($access_key, $secret_key);
 
-assert('$s3->bucket($bucket)->has("TEST") == false');
+ensure($s3->bucket($bucket)->has("TEST"))->is(false);
 
 // create a new object using fluent API
 $result = $s3->create("/{$bucket}/TEST")
